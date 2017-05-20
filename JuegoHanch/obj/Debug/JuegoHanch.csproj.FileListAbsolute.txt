@@ -1,0 +1,6 @@
+C:\Users\Carla\Desktop\DAMdos\Programacion\JuegoHanch\JuegoHanch\bin\Debug\JuegoHanch.exe.config
+C:\Users\Carla\Desktop\DAMdos\Programacion\JuegoHanch\JuegoHanch\bin\Debug\JuegoHanch.exe
+C:\Users\Carla\Desktop\DAMdos\Programacion\JuegoHanch\JuegoHanch\bin\Debug\JuegoHanch.pdb
+C:\Users\Carla\Desktop\DAMdos\Programacion\JuegoHanch\JuegoHanch\obj\Debug\JuegoHanch.csprojResolveAssemblyReference.cache
+C:\Users\Carla\Desktop\DAMdos\Programacion\JuegoHanch\JuegoHanch\obj\Debug\JuegoHanch.exe
+C:\Users\Carla\Desktop\DAMdos\Programacion\JuegoHanch\JuegoHanch\obj\Debug\JuegoHanch.pdb
