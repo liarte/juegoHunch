@@ -10,15 +10,16 @@
     int incrXSalto;
     int fotogramaMvto;
     int cantidadMovimientoSalto;
-    int[] pasosSaltoArriba = {-14, -14, -11, -8, -6, -4, -2, 0,
-                             0, 2, 4, 6, 8, 11, 14, 14 };
+    int[] pasosSaltoArriba = {-10, -10, -8, -8, -6, -6, -4, -2, -1, -1, 0,
+                             0, 1, 1, 2, 4, 6, 6, 8, 8, 10, 10 };
 
     // Constructor
     public Personaje(Partida p)
     {
         miPartida = p;   // Para enlazar con el resto de componentes
-        x = 200;         // Resto de valores iniciales
-        y = 274;
+        //x = 200;         // Resto de valores iniciales
+        //y = 274;
+        MoverA(130, 274);
         SetAnchoAlto(40, 30);
         SetVelocidad(4, 4);
         vidas = 3;
@@ -47,7 +48,7 @@
             x -= incrX;
     }
 
-    public void MoverArriba()
+    /*public void MoverArriba()
     {
         if (saltando) return;
         if (miPartida.GetMapa().EsPosibleMover(x, y - incrY,
@@ -61,7 +62,7 @@
         if (miPartida.GetMapa().EsPosibleMover(x, y + incrY,
           x + ancho, y + alto + incrY))
             y += incrY;
-    }
+    }*/
 
 
     public new void Mover()

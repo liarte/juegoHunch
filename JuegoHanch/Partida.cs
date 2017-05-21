@@ -5,6 +5,7 @@
     private Personaje miPersonaje;
     private Enemigo miEnemigo;
     private Mapa miPantallaJuego;
+    private Fuente fuenteSans18;
 
     // Otros datos del juego
     int puntos;             // Puntuacion obtenida por el usuario
@@ -19,6 +20,7 @@
         miPantallaJuego = new Mapa(this);
         puntos = 0;
         partidaTerminada = false;
+        fuenteSans18 = new Fuente("FreeSansBold.ttf", 18);
     }
 
 
@@ -32,11 +34,11 @@
         if (Hardware.TeclaPulsada(Hardware.TECLA_IZQ))
             miPersonaje.MoverIzquierda();
 
-        if (Hardware.TeclaPulsada(Hardware.TECLA_ARR))
+        /*if (Hardware.TeclaPulsada(Hardware.TECLA_ARR))
             miPersonaje.MoverArriba();
 
         if (Hardware.TeclaPulsada(Hardware.TECLA_ABA))
-            miPersonaje.MoverAbajo();
+            miPersonaje.MoverAbajo();*/
 
         if (Hardware.TeclaPulsada(Hardware.TECLA_ESP))
         {
@@ -49,16 +51,19 @@
         }
 
         // Compruebo el Joystick
-        if (Hardware.JoystickPulsado(0))
-            miPersonaje.Disparar();
-
         int posXJoystick, posYJoystick;
-        if (Hardware.JoystickMovido(out posXJoystick, out posYJoystick))
+        bool JoystickUtilizado = Hardware.JoystickMovido(out posXJoystick, out posYJoystick);
+
+        if (Hardware.JoystickPulsado(0))
+        {
+            if (posXJoystick > 0) miPersonaje.SaltarDerecha();
+            else if (posXJoystick < 0) miPersonaje.SaltarIzquierda();
+            else miPersonaje.Saltar();
+        }
+        else if (JoystickUtilizado)
         {
             if (posXJoystick > 0) miPersonaje.MoverDerecha();
             else if (posXJoystick < 0) miPersonaje.MoverIzquierda();
-            else if (posYJoystick > 0) miPersonaje.MoverAbajo();
-            else if (posYJoystick < 0) miPersonaje.MoverArriba();
         }
 
         // Compruebo el raton
@@ -76,7 +81,7 @@
 
 
     // --- Animación de los enemigos y demás objetos "que se muevan solos" -----
-    void moverElementos()
+    public void moverElementos()
     {
         miEnemigo.Mover();
         miPersonaje.Mover();
@@ -84,9 +89,29 @@
 
 
     // --- Comprobar colisiones de enemigo con personaje, etc ---
-    void comprobarColisiones()
+    public void comprobarColisiones()
     {
-        // Nada por ahora
+        //colision de personaje con fondo
+        int puntosMovimiento = miPantallaJuego.ObtenerPuntosPosicion(
+            miPersonaje.GetX(),
+            miPersonaje.GetY(),
+            miPersonaje.GetX() + miPersonaje.GetAncho(),
+            miPersonaje.GetY() + miPersonaje.GetAlto());
+
+        if (puntosMovimiento > 0)
+        {
+            puntos += puntosMovimiento;
+        }
+
+        if ((puntosMovimiento < 0) || miPersonaje.ColisionCon(miEnemigo))
+        {
+            miPersonaje.Morir();
+            miPersonaje.Reiniciar();
+            miEnemigo.Reiniciar();
+        }
+
+        if (miPersonaje.GetVidas() == 0)
+            partidaTerminada = true;
     }
 
 
@@ -100,6 +125,11 @@
         miPantallaJuego.DibujarOculta();
         miPersonaje.DibujarOculta();
         miEnemigo.DibujarOculta();
+
+        //muestro las vidas del personaje
+        Hardware.EscribirTextoOculta("VIDAS: " + miPersonaje.GetVidas(),
+            280, 550, 0xAA, 0xAA, 0xAA, fuenteSans18);
+
 
         // Finalmente, muestro en pantalla
         Hardware.VisualizarOculta();
@@ -116,8 +146,10 @@
     // --- Bucle principal de juego -----
     public void BuclePrincipal()
     {
-
         partidaTerminada = false;
+        miPersonaje.Reiniciar();
+        miPersonaje.SetVidas(3);
+        miEnemigo.Reiniciar();
         do
         {
             comprobarTeclas();

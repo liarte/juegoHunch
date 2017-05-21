@@ -1,31 +1,4 @@
-﻿/** 
-         *   ElemGrafico: elemento grafico (sprite)
-         *  
-         *       @see Hardware Juego Imagen
-         *       @author  Nacho
-         */
-
-/* --------------------------------------------------         
-   Parte de Saboteur - Remake
-   Versiones hasta la fecha:
-   
-   Num.   Fecha       Por / Cambios
-   ---------------------------------------------------
-   0.01  14-May-2009  Nacho Cabanes
-                      Version inicial, basada en la 0.08 de ElectroFreddy
-   0.02  10-Ene-2010  Nacho Cabanes
-                      Convertidos a "int" los MoverA, para evitar tantas
-                        conversiones de tipo
-                      Añadido "anguloCon": angulo entre dos ElemGrafico
-                      Cambiado "activo" por "visible" y "chocable" para
-                        que se pueda dibujar un elemento pero sin comprobar
-                        colisiones con él y viceversa
-                      Añadidas varias direcciones más (esquinas, 
-                        APARECIENDO, MOVIENDO)
-
- ---------------------------------------------------- */
-
-
+﻿
 public class ElemGrafico
 {
     // ----- Atributos -----
@@ -41,6 +14,8 @@ public class ElemGrafico
 
     protected short xOriginal;  // Para llevar a su posicion inicial
     protected short yOriginal;
+    protected short incrXOriginal;
+    protected short incrYOriginal;
 
     // La imagen que se mostrará en pantalla, si es estatica
     protected Imagen miImagen;
@@ -110,6 +85,11 @@ public class ElemGrafico
     {
         incrX = (short)vX;
         incrY = (short)vY;
+        if((incrXOriginal ==0) && (incrYOriginal ==0))
+        {
+            incrXOriginal = (short)vX;
+            incrYOriginal = (short)vY;
+        }
     }
 
 
@@ -156,11 +136,13 @@ public class ElemGrafico
     {
         x = xOriginal;
         y = yOriginal;
+        incrX = incrXOriginal;
+        incrY = incrYOriginal;
     }
 
 
     /// Dibuja el elemento grafico en su posicion actual en pantalla oculta
-    public void DibujarOculta()
+    public virtual void DibujarOculta()
     {
         if (visible == false) return;
         if (contieneSecuencia)
@@ -194,6 +176,23 @@ public class ElemGrafico
             return false;
     }
 
+    /// Comprueba si choca con un rectangulo
+    public bool ColisionCon(short nx, short ny,
+      short nxmax, short nymax)
+    {
+        // No se debe chocar con un elemento oculto      
+        if (chocable == false)
+            return false;
+        // Ahora ya compruebo coordenadas
+        if ((nxmax > x)
+            && (nymax > y)
+            && (x + ancho > nx)
+            && (y + alto > ny))
+            return true;
+        else
+            return false;
+    }
+
     /// Prepara el siguiente fotograma, para animar el movimiento de
     /// un personaje
     public void SiguienteFotograma()
@@ -204,9 +203,9 @@ public class ElemGrafico
             fotogramaActual = 0;
     }
 
-    public void Mover()
+    public virtual void Mover()
     {
-        // Para ser redefinido en las clases "hijas"
+        // redefinido en las clases "hijas"
     }
 
     /// Devuelve el valor de x
@@ -227,6 +226,17 @@ public class ElemGrafico
         alto = al;
         ancho = an;
     }
+
+    public short GetAncho()
+    {
+        return ancho;
+    }
+
+    public short GetAlto()
+    {
+        return alto;
+    }
+
 
     /// Devuelve si está visible
     public bool GetActivo()

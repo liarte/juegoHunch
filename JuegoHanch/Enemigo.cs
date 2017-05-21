@@ -1,20 +1,4 @@
-﻿/** 
- *   Enemigo: Un primer enemigo que se mueve de lado a lado
- *  
- *   @see Hardware ElemGrafico Juego
- *   @author 1-DAI IES San Vicente 2010/11
- */
-
-/* --------------------------------------------------
-   Versiones hasta la fecha:
-   
-   Num.   Fecha       Por / Cambios
-   ---------------------------------------------------
-   0.02  21-Dic-2010  Nacho Cabanes
-                      Enemigo inicial, con una imagen, capaz de
-                        moverse a la derecha,izquierda, arriba, abajo
-                         y (vacio) Disparar o Mover de forma automatica
- ---------------------------------------------------- */
+﻿using System;
 
 public class Enemigo : ElemGrafico
 {
@@ -26,15 +10,18 @@ public class Enemigo : ElemGrafico
     public Enemigo(Partida p)
     {
         miPartida = p;   // Para enlazar con el resto de componentes
-        x = 200;         // Resto de valores iniciales
-        y = 296;
-        incrX = 4;
+        //x = 200;         // Resto de valores iniciales
+        //y = 296;
+        MoverA(600, 296);
+        SetAnchoAlto(36, 48);
+        SetVelocidad(4, 0);
+        //incrX = 4;
         CargarImagen("imagenes/enemigo.png");
     }
 
 
     // Métodos de movimiento
-    public void Mover()
+    public override void Mover()
     {
         x += incrX;
 
@@ -42,4 +29,4 @@ public class Enemigo : ElemGrafico
             incrX = (short)(-incrX);
     }
 
-} /* fin de la clase Personaje */
+}

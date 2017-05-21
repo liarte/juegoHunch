@@ -1,36 +1,22 @@
-﻿/** 
- *   Mapa: Mapa (array) que representa a un nivel de juego
- *  
- *   @see Hardware ElemGrafico Juego
- *   @author 1-DAI IES San Vicente 2010/11
- */
-
-/* --------------------------------------------------
-   Versiones hasta la fecha:
-   
-   Num.   Fecha       Por / Cambios
-   ---------------------------------------------------
-   0.03  23-Dic-2010  Nacho Cabanes
-                      Mapa inicial, de la primera pantalla
- ---------------------------------------------------- */
-
+﻿
 public class Mapa : ElemGrafico
 {
 
     // Datos del mapa del nivel actual
     Partida miPartida;
 
-    private int altoMapa = 16, anchoMapa = 32; //anchoMapa = 32;
+    private int altoMapa = 16, anchoMapa = 32;
     private int anchoTile = 24, altoTile = 24;
     private int margenIzqdo = 20, margenSuperior = 100;
+    private int campana = 1;
 
     //ElemGrafico arbol, deslizante, ladrillo, ladrilloX, llave, puerta,
     //  sueloFino, sueloFragil, sueloGrueso, techo;
 
-    ElemGrafico lateral, ladrillo, techo;
+    ElemGrafico lateral, ladrillo, techo, campanas, vida;
 
-
-    string[] datosNivel =
+    string[] datosNivel;
+    string[] datosNivelIniciales =
     {"                                ",
      " TTTTT                          ",
      "                                ",
@@ -62,9 +48,19 @@ public class Mapa : ElemGrafico
         //sueloFino = new ElemGrafico("imagenes/suelo.png");
         //sueloFragil = new ElemGrafico("imagenes/sueloFragil.png");
         techo = new ElemGrafico("imagenes/techo.png");
+
+        datosNivel = new string[altoMapa];
+        Reiniciar();
     }
 
-    public void DibujarOculta()
+    public void Reiniciar()
+    {
+        for (int fila = 0; fila < altoMapa; fila++)
+            datosNivel[fila] = datosNivelIniciales[fila];
+    }
+
+
+    public override void DibujarOculta()
     {
         // Dibujo el fondo
         for (int i = 0; i < altoMapa; i++)
@@ -87,7 +83,7 @@ public class Mapa : ElemGrafico
     }
 
     //comprobacion de si hay alguna casilla de fondo
-    public bool EsPosibleMover (int x, int y, int xMax, int yMax)
+    public bool EsPosibleMover(int x, int y, int xMax, int yMax)
     {
         for (int fila = 0; fila < altoMapa; fila++)
             for (int colum = 0; colum < anchoMapa; colum++)
@@ -95,16 +91,55 @@ public class Mapa : ElemGrafico
                 int posX = colum * anchoTile + margenIzqdo;
                 int posY = fila * altoTile + margenSuperior;
                 //si no hay espacios en blancos
-                if((datosNivel[fila][colum] != ' ')
-                    && (posX+anchoTile > x) && (posY+altoTile > y)
+                if ((datosNivel[fila][colum] != ' ')
+                    && (posX + anchoTile > x) && (posY + altoTile > y)
                         && (xMax > posX) && (yMax > posY))
                 {
                     return false;
                 }
             }
         return true;
-
     }
 
+    public int ObtenerPuntosPosicion(int x, int y, int xmax, int ymax)
+    {
 
-} /* fin de la clase Mapa */
+        // Compruebo si choca con alguna casilla del fondo
+        for (int fila = 0; fila < altoMapa; fila++)
+            for (int colum = 0; colum < anchoMapa; colum++)
+            {
+                int posX = colum * anchoTile + margenIzqdo;
+                int posY = fila * altoTile + margenSuperior;
+
+                // Si choca con la casilla que estoy mirando
+                if ((posX + anchoTile > x) && (posY + altoTile > y)
+                    && (xmax > posX) && (ymax > posY))
+                {
+                    /*// Si choca con el techo o con un arbol
+                    if ((datosNivel[fila][colum] == 'T')
+                             || (datosNivel[fila][colum] == 'A'))
+                        return -1; // (puntuacion -1: perder vida)*/
+
+                    // Si toca una llave
+                    if (datosNivel[fila][colum] == 'V')
+                    {
+                        // datosNivel[fila][colum] = ' '; (No valido en C#: 2 pasos)
+                        datosNivel[fila] = datosNivel[fila].Remove(colum, 1);
+                        datosNivel[fila] = datosNivel[fila].Insert(colum, " ");
+                        return 10;
+                    }
+
+                    // Si toca la puerta y no quedan llaves, 50 puntos
+                    // y (pronto) pasar al nivel siguiente
+                    if ((datosNivel[fila][colum] == 'C')
+                        && (campana == 0))
+                    {
+                        return 50;
+                    }
+
+                }
+            }
+        return 0;
+
+    }
+}

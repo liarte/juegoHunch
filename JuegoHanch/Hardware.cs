@@ -2,44 +2,6 @@
 using System.Threading;
 using Tao.Sdl;
 
-/** 
-         *   Hardware: oculta el acceso a la libreria grafica
-         *  
-         *       @see imagen Fuente ElemGrafico
-         *       @author Nacho
-         */
-
-/* --------------------------------------------------         
-   Parte de Fruity Frank - Remake
-   Versiones hasta la fecha:
-   
-   Num.   Fecha       Por / Cambios
-   ---------------------------------------------------
-   0.20  08-Dic-2008  Nacho Cabanes
-                      Clase básica: incluye Inicializar, DibujarImagenOculta,
-                      VisualizarOculta, CargarImagen, TeclaPulsada,
-                      RectanguloRellenoRGBA, RectanguloGBBA, Pausa, ErrorFatal,
-                      GetAncho, GetAlto, definiciones de teclas
-   0.21  09-Dic-2008  Eduardo y Javi
-                      Completado, CargarFuente, EscribirTextoOculta
-                      Enmascarado puntero                      
-   0.22  09-Ene-2009  Nacho Cabanes
-                      "Inicializar" prepara también SDL_Mixer, para poder
-                      reproducir sonidos
-   0.23  03-Mar-2009  Nacho Cabanes
-                      Se puede comprobar si se ha pulsado el ratón
-   0.24  07-Ene-2010  Nacho Cabanes
-                      La posición de pulsación del ratón se devuelve con 
-                        parametros out
-                      El comenzar en pantalla completa o no, es un parámetro
-                        booleano de "inicializar"
-                        
-   En AstroAttack:
-   0.05 25-Mar-2010  Nacho Cabanes
-                      Añadido soporte de Joystick
- 
- ---------------------------------------------------- */
-
 public class Hardware
 {
     // Atributos
