@@ -1,4 +1,6 @@
-﻿public class Partida
+﻿using System;
+
+public class Partida
 {
 
     // Componentes del juego
@@ -80,7 +82,7 @@
     }
 
 
-    // --- Animación de los enemigos y demás objetos "que se muevan solos" -----
+    //Animación de los enemigos y demás objetos "que se muevan solos"
     public void moverElementos()
     {
         miEnemigo.Mover();
@@ -130,9 +132,12 @@
         Hardware.EscribirTextoOculta("VIDAS: " + miPersonaje.GetVidas(),
             280, 550, 0xAA, 0xAA, 0xAA, fuenteSans18);
 
+        Hardware.EscribirTextoOculta("PUNTOS: " + puntos,
+            450, 550, 0xAA, 0xAA, 0xAA, fuenteSans18);
 
         // Finalmente, muestro en pantalla
         Hardware.VisualizarOculta();
+        Hardware.BorrarPantallaOculta(0, 0, 0);
     }
 
 

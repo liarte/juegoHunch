@@ -132,7 +132,7 @@ public class ElemGrafico
     }
 
     /// Devuelve el personaje a su posición inicial
-    public void Reiniciar()
+    public virtual void Reiniciar()
     {
         x = xOriginal;
         y = yOriginal;

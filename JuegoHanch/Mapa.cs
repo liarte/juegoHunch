@@ -8,20 +8,20 @@ public class Mapa : ElemGrafico
     private int altoMapa = 16, anchoMapa = 32;
     private int anchoTile = 24, altoTile = 24;
     private int margenIzqdo = 20, margenSuperior = 100;
-    private int campana = 1;
+    private int numCampanas = 1;
 
     //ElemGrafico arbol, deslizante, ladrillo, ladrilloX, llave, puerta,
     //  sueloFino, sueloFragil, sueloGrueso, techo;
 
-    ElemGrafico lateral, ladrillo, techo, campanas, vida;
+    ElemGrafico lateral, ladrillo, techo, campana, vida;
 
     string[] datosNivel;
     string[] datosNivelIniciales =
     {"                                ",
      " TTTTT                          ",
      "                                ",
-     "                TTTTTTTTTT      ",
-     "                         L      ",
+     "                 TTTTTTTTT      ",
+     "                   C     L      ",
      "                         L      ",
      "                         L      ",
      "                         L      ",
@@ -40,7 +40,7 @@ public class Mapa : ElemGrafico
         miPartida = p;   // Para enlazar con el resto de componentes
 
         lateral = new ElemGrafico("imagenes/lateral.png");
-        //deslizante = new ElemGrafico("imagenes/deslizante.png");
+        campana= new ElemGrafico("imagenes/campana1.png");
         ladrillo = new ElemGrafico("imagenes/ladrillo.png");
         //ladrilloX = new ElemGrafico("imagenes/ladrillo2.png");
         //llave = new ElemGrafico("imagenes/llave.png");
@@ -53,10 +53,11 @@ public class Mapa : ElemGrafico
         Reiniciar();
     }
 
-    public void Reiniciar()
+    public override void Reiniciar()
     {
         for (int fila = 0; fila < altoMapa; fila++)
             datosNivel[fila] = datosNivelIniciales[fila];
+
     }
 
 
@@ -73,7 +74,8 @@ public class Mapa : ElemGrafico
                     case 'L': lateral.DibujarOculta(posX, posY); break;
                     case 'S': ladrillo.DibujarOculta(posX, posY); break;
                     case 'T': techo.DibujarOculta(posX, posY); break;
-                        //case 'L': ladrillo.DibujarOculta(posX, posY); break;
+                    case 'C': campana.DibujarOculta(posX, posY);
+                        numCampanas++; break;
                         //case 'P': puerta.DibujarOculta(posX, posY); break;
                         //case 'S': sueloFino.DibujarOculta(posX, posY); break;
                         //case 'T': techo.DibujarOculta(posX, posY); break;
@@ -90,13 +92,16 @@ public class Mapa : ElemGrafico
             {
                 int posX = colum * anchoTile + margenIzqdo;
                 int posY = fila * altoTile + margenSuperior;
-                //si no hay espacios en blancos
-                if ((datosNivel[fila][colum] != ' ')
-                    && (posX + anchoTile > x) && (posY + altoTile > y)
-                        && (xMax > posX) && (yMax > posY))
-                {
-                    return false;
-                }
+                // Si se solapa con la posic a la que queremos mover
+                if ((posX + anchoTile > x) && (posY + altoTile > y)
+                    && (xMax > posX) && (yMax > posY))
+                    // Y no es espacio blanco, campana, o vida
+                    if ((datosNivel[fila][colum] != ' ')
+                        && (datosNivel[fila][colum] != 'C'))
+                       // && (datosNivel[fila][colum] != 'V'))
+                    {
+                        return false;
+                    }
             }
         return true;
     }
@@ -126,13 +131,14 @@ public class Mapa : ElemGrafico
                         // datosNivel[fila][colum] = ' '; (No valido en C#: 2 pasos)
                         datosNivel[fila] = datosNivel[fila].Remove(colum, 1);
                         datosNivel[fila] = datosNivel[fila].Insert(colum, " ");
+
                         return 10;
                     }
 
                     // Si toca la puerta y no quedan llaves, 50 puntos
                     // y (pronto) pasar al nivel siguiente
                     if ((datosNivel[fila][colum] == 'C')
-                        && (campana == 0))
+                        && (numCampanas == 0))
                     {
                         return 50;
                     }
