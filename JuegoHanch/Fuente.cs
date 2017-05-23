@@ -1,7 +1,6 @@
 ﻿
 using System;
 using Tao.Sdl;
-
 public class Fuente
 {
     // Atributos
@@ -25,11 +24,11 @@ public class Fuente
 
     /*public  void Escribir(short x, short y)
     {
-      Hardware.EscribirTextoOculta(punteroInterno, x,y);
+        Hardware.EscribirTextoOculta(punteroInterno, x,y);
     }*/
 
     public IntPtr LeerPuntero()
     {
         return punteroInterno;
     }
-} /* end class Fuente */
+}

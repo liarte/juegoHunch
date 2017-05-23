@@ -13,7 +13,7 @@ public class Enemigo : ElemGrafico
         //x = 200;         // Resto de valores iniciales
         //y = 296;
         MoverA(600, 296);
-        SetAnchoAlto(36, 48);
+        SetAnchoAlto(30, 30);
         SetVelocidad(4, 0);
         //incrX = 4;
         CargarImagen("imagenes/enemigo.png");
@@ -21,7 +21,7 @@ public class Enemigo : ElemGrafico
 
 
     // Métodos de movimiento
-    public override void Mover()
+    public void Mover()
     {
         x += incrX;
 
@@ -30,3 +30,4 @@ public class Enemigo : ElemGrafico
     }
 
 }
+

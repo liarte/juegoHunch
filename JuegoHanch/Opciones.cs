@@ -25,13 +25,13 @@ public class Opciones
 
             Hardware.EscribirTextoOculta(
                 "Opciones", 110, 100,
-                  0x77, 0x77, color, fuenteSans18);
+                    0x77, 0x77, color, fuenteSans18);
 
             Hardware.EscribirTextoOculta("Pronto disponibles...", 200, 240,
-                  color, color, 0, fuenteSans18);
+                    color, color, 0, fuenteSans18);
             Hardware.EscribirTextoOculta(
-                  "Pulsa ESC para volver a la presentación...",
-                  110, 550, 0xAA, 0xAA, 0xAA, fuenteSans12);
+                    "Pulsa ESC para volver a la presentación...",
+                    110, 550, 0xAA, 0xAA, 0xAA, fuenteSans12);
 
 
             Hardware.VisualizarOculta();
@@ -40,5 +40,4 @@ public class Opciones
             salir = Hardware.TeclaPulsada(Hardware.TECLA_ESC);
         }
     }
-
-} /* fin de la clase Opciones */
+}

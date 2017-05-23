@@ -1,4 +1,5 @@
-﻿public class Presentacion
+﻿
+public class Presentacion
 {
     // Atributos    
     private ElemGrafico imagenFondo, cartelMovil;
@@ -55,9 +56,9 @@
             Hardware.VisualizarOculta();
             Hardware.Pausa(40);
         } while ((!Hardware.TeclaPulsada(Hardware.TECLA_J))
-                 && (!Hardware.TeclaPulsada(Hardware.TECLA_S))
-                 && (!Hardware.TeclaPulsada(Hardware.TECLA_C))
-                 && (!Hardware.TeclaPulsada(Hardware.TECLA_O)));
+                    && (!Hardware.TeclaPulsada(Hardware.TECLA_S))
+                    && (!Hardware.TeclaPulsada(Hardware.TECLA_C))
+                    && (!Hardware.TeclaPulsada(Hardware.TECLA_O)));
 
         opcionEscogida = OPC_PARTIDA;
         if (Hardware.TeclaPulsada(Hardware.TECLA_S))
@@ -72,5 +73,4 @@
     {
         return opcionEscogida;
     }
-
 }

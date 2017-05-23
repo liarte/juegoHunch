@@ -1,4 +1,5 @@
-﻿public class Creditos
+﻿
+public class Creditos
 {
     // Atributos
     private Fuente fuenteSans18;
@@ -24,23 +25,23 @@
 
             Hardware.EscribirTextoOculta(
                 " PANTALLA CREDITOS ", 110, 100,
-                  0x77, 0x77, color, fuenteSans18);
+                    0x77, 0x77, color, fuenteSans18);
 
             Hardware.EscribirTextoOculta("Nombre y apellidos:", 200, 240,
-                  color, color, 0, fuenteSans18);
+                    color, color, 0, fuenteSans18);
             Hardware.EscribirTextoOculta("Carla Liarte Felipe ", 200, 270,
-                  color, color, 0, fuenteSans18);
+                    color, color, 0, fuenteSans18);
             Hardware.EscribirTextoOculta("Profesora: ", 200, 300,
-                  color, color, 0, fuenteSans18);
+                    color, color, 0, fuenteSans18);
             Hardware.EscribirTextoOculta("Mari chelo", 200, 330,
-                  color, color, 0, fuenteSans18);
+                    color, color, 0, fuenteSans18);
 
             Hardware.EscribirTextoOculta("1º DAM - Programación - 2016/2017", 200, 390,
-                  color, color, 0, fuenteSans18);
+                    color, color, 0, fuenteSans18);
 
             Hardware.EscribirTextoOculta(
-                  "Pulsa ESC para volver a la presentación...",
-                  110, 550, 0xAA, 0xAA, 0xAA, fuenteSans12);
+                    "Pulsa ESC para volver a la presentación...",
+                    110, 550, 0xAA, 0xAA, 0xAA, fuenteSans12);
 
 
             Hardware.VisualizarOculta();
@@ -50,4 +51,5 @@
         }
     }
 
-} /* fin de la clase Creditos */
+}
+

@@ -36,4 +36,4 @@ public class Imagen
     {
         return punteroInterno;
     }
-} /* end class Imagen */
+}

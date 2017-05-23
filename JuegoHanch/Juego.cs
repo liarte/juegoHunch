@@ -1,5 +1,4 @@
-﻿
-public class Juego
+﻿public class Juego
 {
     private Presentacion presentacion;
     private Partida partida;
@@ -51,6 +50,5 @@ public class Juego
         Juego juego = new Juego();
         juego.Ejecutar();
     }
-
 }
-
+ 

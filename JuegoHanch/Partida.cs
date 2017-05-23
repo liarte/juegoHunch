@@ -8,6 +8,7 @@ public class Partida
     private Enemigo miEnemigo;
     private Mapa miPantallaJuego;
     private Fuente fuenteSans18;
+    private Marcador Mimarcador;
 
     // Otros datos del juego
     int puntos;             // Puntuacion obtenida por el usuario
@@ -20,13 +21,14 @@ public class Partida
         miPersonaje = new Personaje(this);
         miEnemigo = new Enemigo(this);
         miPantallaJuego = new Mapa(this);
+        Mimarcador = new Marcador(this);
         puntos = 0;
         partidaTerminada = false;
         fuenteSans18 = new Fuente("FreeSansBold.ttf", 18);
     }
 
 
-    // --- Comprobación de teclas, ratón y joystick -----
+    // --- Comprobación de teclas
     void comprobarTeclas()
     {
         // Muevo si se pulsa alguna flecha del teclado
@@ -52,30 +54,6 @@ public class Partida
                 miPersonaje.Saltar();
         }
 
-        // Compruebo el Joystick
-        int posXJoystick, posYJoystick;
-        bool JoystickUtilizado = Hardware.JoystickMovido(out posXJoystick, out posYJoystick);
-
-        if (Hardware.JoystickPulsado(0))
-        {
-            if (posXJoystick > 0) miPersonaje.SaltarDerecha();
-            else if (posXJoystick < 0) miPersonaje.SaltarIzquierda();
-            else miPersonaje.Saltar();
-        }
-        else if (JoystickUtilizado)
-        {
-            if (posXJoystick > 0) miPersonaje.MoverDerecha();
-            else if (posXJoystick < 0) miPersonaje.MoverIzquierda();
-        }
-
-        // Compruebo el raton
-        int posXRaton = 0, posYRaton = 0;
-        if (Hardware.RatonPulsado(out posXRaton, out posYRaton))
-        {
-            miPersonaje.MoverA(posXRaton, posYRaton);
-        }
-
-
         // Si se pulsa ESC, por ahora termina la partida... y el juego
         if (Hardware.TeclaPulsada(Hardware.TECLA_ESC))
             partidaTerminada = true;
@@ -90,22 +68,27 @@ public class Partida
     }
 
 
-    // --- Comprobar colisiones de enemigo con personaje, etc ---
+    // --- Comprobar colisiones de enemigo con personaje, etc
     public void comprobarColisiones()
     {
-        //colision de personaje con fondo
+        // Colisiones de personaje con fondo: obtener puntos o perder vida
         int puntosMovimiento = miPantallaJuego.ObtenerPuntosPosicion(
-            miPersonaje.GetX(),
-            miPersonaje.GetY(),
-            miPersonaje.GetX() + miPersonaje.GetAncho(),
-            miPersonaje.GetY() + miPersonaje.GetAlto());
+          miPersonaje.GetX(),
+          miPersonaje.GetY(),
+          miPersonaje.GetX() + miPersonaje.GetAncho(),
+          miPersonaje.GetY() + miPersonaje.GetAlto());
 
+        // Si realmente ha recogido un objeto, sumamos los puntos en el juego
         if (puntosMovimiento > 0)
         {
             puntos += puntosMovimiento;
-        }
 
-        if ((puntosMovimiento < 0) || miPersonaje.ColisionCon(miEnemigo))
+            // Si ademas es una campana, avanzamos de nivel
+            if (puntosMovimiento == 50)
+                //avanzarNivel()
+                ;
+        }
+        if (miPersonaje.ColisionCon(miEnemigo))
         {
             miPersonaje.Morir();
             miPersonaje.Reiniciar();
@@ -128,12 +111,16 @@ public class Partida
         miPersonaje.DibujarOculta();
         miEnemigo.DibujarOculta();
 
-        //muestro las vidas del personaje
-        Hardware.EscribirTextoOculta("VIDAS: " + miPersonaje.GetVidas(),
-            280, 550, 0xAA, 0xAA, 0xAA, fuenteSans18);
+        //Marcador
+        Mimarcador.SetVidas(miPersonaje.GetVidas());
+        Mimarcador.SetPuntuacion(puntos);
+        Mimarcador.DibujarOculta();
 
-        Hardware.EscribirTextoOculta("PUNTOS: " + puntos,
-            450, 550, 0xAA, 0xAA, 0xAA, fuenteSans18);
+        // Muestro vidas (pronto será parte del marcador)
+        /*Hardware.EscribirTextoOculta("Vidas: " + miPersonaje.GetVidas(),
+            280, 550, 0xAA, 0xAA, 0xAA, fuenteSans18);*/
+
+        //Hardware.EscribirTextoOculta("Puntuación: "+puntos)
 
         // Finalmente, muestro en pantalla
         Hardware.VisualizarOculta();
@@ -151,6 +138,7 @@ public class Partida
     // --- Bucle principal de juego -----
     public void BuclePrincipal()
     {
+
         partidaTerminada = false;
         miPersonaje.Reiniciar();
         miPersonaje.SetVidas(3);
@@ -165,15 +153,16 @@ public class Partida
         } while (!partidaTerminada);
     }
 
-    //para que el mapa y enemigos puedan saber los mov del personaje
+
+    // --- Para que mapa y enemigos puedan saber cosas del personaje
     public Personaje GetPersonaje()
     {
         return miPersonaje;
     }
 
+    // --- Para que personaje y enemigos puedan saber cosas del mapa
     public Mapa GetMapa()
     {
         return miPantallaJuego;
     }
-
-} /* fin de la clase Partida */
+}

@@ -54,6 +54,7 @@
     <Compile Include="Hardware.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Mapa.cs" />
+    <Compile Include="Marcador.cs" />
     <Compile Include="Opciones.cs" />
     <Compile Include="Partida.cs" />
     <Compile Include="Personaje.cs" />

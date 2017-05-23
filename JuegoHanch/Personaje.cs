@@ -3,24 +3,24 @@
 
     // Datos del personaje
     Partida miPartida; // Para poder comunicar con la partida
-                       
-    short vidas;  // Vidas restantes
-    //incremento de saltos
-    bool saltando;
+                       // y preguntarle sobre enemigos, mapa, etc   
+    short vidas;       // Vidas restantes
+    bool saltando = false;
     int incrXSalto;
     int fotogramaMvto;
     int cantidadMovimientoSalto;
-    int[] pasosSaltoArriba = {-10, -10, -8, -8, -6, -6, -4, -2, -1, -1, 0,
-                             0, 1, 1, 2, 4, 6, 6, 8, 8, 10, 10 };
+    int[] pasosSaltoArriba = {-14, -14, -11, -8, -6, -4, -2, 0,
+                             0, 2, 4, 6, 8, 11, 14, 14 };
+
 
     // Constructor
     public Personaje(Partida p)
     {
         miPartida = p;   // Para enlazar con el resto de componentes
-        //x = 200;         // Resto de valores iniciales
-        //y = 274;
+        //x = 270;         // Resto de valores iniciales
+        //y = 90;
         MoverA(130, 274);
-        SetAnchoAlto(40, 30);
+        SetAnchoAlto(30, 30);
         SetVelocidad(4, 4);
         vidas = 3;
         saltando = false;
@@ -31,7 +31,6 @@
     }
 
 
-    // Métodos de movimiento
     public void MoverDerecha()
     {
         if (saltando) return; //no se puede mover mientras salta
@@ -48,7 +47,7 @@
             x -= incrX;
     }
 
-    /*public void MoverArriba()
+    public void MoverArriba()
     {
         if (saltando) return;
         if (miPartida.GetMapa().EsPosibleMover(x, y - incrY,
@@ -62,7 +61,7 @@
         if (miPartida.GetMapa().EsPosibleMover(x, y + incrY,
           x + ancho, y + alto + incrY))
             y += incrY;
-    }*/
+    }
 
 
     public new void Mover()
@@ -101,22 +100,21 @@
         incrXSalto = 0;
     }
 
+
+    // Comienza la secuencia de salto hacia la derecha
     public void SaltarDerecha()
     {
         Saltar();
         incrXSalto = incrX;
     }
 
+
+    // Comienza la secuencia de salto hacia la izquierda
     public void SaltarIzquierda()
     {
         Saltar();
         incrXSalto = -incrX;
     }
-    public void Disparar()
-    {
-        // TODO: Vacio por ahora
-    }
-
 
     // Métodos de acceso a las vidas
     public int GetVidas()
@@ -133,6 +131,4 @@
     {
         vidas--;
     }
-
-
 }

@@ -13,7 +13,7 @@ public class Mapa : ElemGrafico
     //ElemGrafico arbol, deslizante, ladrillo, ladrilloX, llave, puerta,
     //  sueloFino, sueloFragil, sueloGrueso, techo;
 
-    ElemGrafico lateral, ladrillo, techo, campana, vida;
+    ElemGrafico lateral, ladrillo, techo, campana;
 
     string[] datosNivel;
     string[] datosNivelIniciales =
@@ -53,7 +53,7 @@ public class Mapa : ElemGrafico
         Reiniciar();
     }
 
-    public override void Reiniciar()
+    public  void Reiniciar()
     {
         for (int fila = 0; fila < altoMapa; fila++)
             datosNivel[fila] = datosNivelIniciales[fila];
@@ -61,21 +61,20 @@ public class Mapa : ElemGrafico
     }
 
 
-    public override void DibujarOculta()
+    public void DibujarOculta()
     {
         // Dibujo el fondo
-        for (int i = 0; i < altoMapa; i++)
-            for (int j = 0; j < anchoMapa; j++)
+        for (int fila = 0; fila < altoMapa; fila++)
+            for (int colum = 0; colum < anchoMapa; colum++)
             {
-                int posX = j * anchoTile + margenIzqdo;
-                int posY = i * altoTile + margenSuperior;
-                switch (datosNivel[i][j])
+                int posX = colum * anchoTile + margenIzqdo;
+                int posY = fila * altoTile + margenSuperior;
+                switch (datosNivel[fila][colum])
                 {
                     case 'L': lateral.DibujarOculta(posX, posY); break;
                     case 'S': ladrillo.DibujarOculta(posX, posY); break;
                     case 'T': techo.DibujarOculta(posX, posY); break;
-                    case 'C': campana.DibujarOculta(posX, posY);
-                        numCampanas++; break;
+                    case 'C': campana.DibujarOculta(posX, posY); break;
                         //case 'P': puerta.DibujarOculta(posX, posY); break;
                         //case 'S': sueloFino.DibujarOculta(posX, posY); break;
                         //case 'T': techo.DibujarOculta(posX, posY); break;
@@ -97,7 +96,7 @@ public class Mapa : ElemGrafico
                     && (xMax > posX) && (yMax > posY))
                     // Y no es espacio blanco, campana, o vida
                     if ((datosNivel[fila][colum] != ' ')
-                        && (datosNivel[fila][colum] != 'C'))
+                        && (datosNivel[fila][colum] != 'V'))
                        // && (datosNivel[fila][colum] != 'V'))
                     {
                         return false;

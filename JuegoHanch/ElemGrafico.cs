@@ -1,5 +1,4 @@
-﻿
-public class ElemGrafico
+﻿public class ElemGrafico
 {
     // ----- Atributos -----
     protected short x;
@@ -85,7 +84,7 @@ public class ElemGrafico
     {
         incrX = (short)vX;
         incrY = (short)vY;
-        if((incrXOriginal ==0) && (incrYOriginal ==0))
+        if ((incrXOriginal == 0) && (incrYOriginal == 0))
         {
             incrXOriginal = (short)vX;
             incrYOriginal = (short)vY;
@@ -132,7 +131,7 @@ public class ElemGrafico
     }
 
     /// Devuelve el personaje a su posición inicial
-    public virtual void Reiniciar()
+    public void Reiniciar()
     {
         x = xOriginal;
         y = yOriginal;
@@ -142,7 +141,7 @@ public class ElemGrafico
 
 
     /// Dibuja el elemento grafico en su posicion actual en pantalla oculta
-    public virtual void DibujarOculta()
+    public void DibujarOculta()
     {
         if (visible == false) return;
         if (contieneSecuencia)
@@ -164,7 +163,7 @@ public class ElemGrafico
     public bool ColisionCon(ElemGrafico otroElem)
     {
         // No se debe chocar con un elemento oculto      
-        if ((visible == false) || (otroElem.visible == false))
+        if ((chocable == false) || (otroElem.chocable == false))
             return false;
         // Ahora ya compruebo coordenadas
         if ((otroElem.x + otroElem.ancho > x)
@@ -175,6 +174,7 @@ public class ElemGrafico
         else
             return false;
     }
+
 
     /// Comprueba si choca con un rectangulo
     public bool ColisionCon(short nx, short ny,
@@ -193,6 +193,7 @@ public class ElemGrafico
             return false;
     }
 
+
     /// Prepara el siguiente fotograma, para animar el movimiento de
     /// un personaje
     public void SiguienteFotograma()
@@ -203,15 +204,25 @@ public class ElemGrafico
             fotogramaActual = 0;
     }
 
-    public virtual void Mover()
+    public void Mover()
     {
-        // redefinido en las clases "hijas"
+        // Para ser redefinido en las clases "hijas"
     }
 
     /// Devuelve el valor de x
     public short GetX()
     {
         return x;
+    }
+
+    public short GetAncho()
+    {
+        return ancho;
+    }
+
+    public short GetAlto()
+    {
+        return alto;
     }
 
     /// Devuelve el valor de y
@@ -226,17 +237,6 @@ public class ElemGrafico
         alto = al;
         ancho = an;
     }
-
-    public short GetAncho()
-    {
-        return ancho;
-    }
-
-    public short GetAlto()
-    {
-        return alto;
-    }
-
 
     /// Devuelve si está visible
     public bool GetActivo()
@@ -280,4 +280,4 @@ public class ElemGrafico
 
 
 
-} /* end class ElemGrafico */
+}

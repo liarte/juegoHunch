@@ -31,14 +31,14 @@ public class Hardware
             flags |= Sdl.SDL_FULLSCREEN;
         Sdl.SDL_Init(Sdl.SDL_INIT_EVERYTHING);
         pantallaOculta = Sdl.SDL_SetVideoMode(
-          ancho,
-          alto,
-          colores,
-          flags);
+            ancho,
+            alto,
+            colores,
+            flags);
 
         // Preparamos el rectángulo de la pantalla
         Sdl.SDL_Rect rect2 =
-          new Sdl.SDL_Rect(0, 0, (short)ancho, (short)alto);
+            new Sdl.SDL_Rect(0, 0, (short)ancho, (short)alto);
         Sdl.SDL_SetClipRect(pantallaOculta, ref rect2);
 
         // Soporte de tipos de letra TTF
@@ -106,17 +106,17 @@ public class Hardware
     }
 
     public static void EscribirTextoOculta(string texto,
-      short x, short y, byte r, byte g, byte b, Fuente f)
+        short x, short y, byte r, byte g, byte b, Fuente f)
     {
         EscribirTextoOculta(texto, x, y, r, g, b, f.LeerPuntero());
     }
 
     public static void EscribirTextoOculta(string texto,
-      short x, short y, byte r, byte g, byte b, IntPtr fuente)
+        short x, short y, byte r, byte g, byte b, IntPtr fuente)
     {
         Sdl.SDL_Color color = new Sdl.SDL_Color(r, g, b);
         IntPtr textoComoImagen = SdlTtf.TTF_RenderText_Solid(
-          fuente, texto, color);
+            fuente, texto, color);
         if (textoComoImagen == IntPtr.Zero)
             Environment.Exit(5);
 
@@ -124,7 +124,7 @@ public class Hardware
         Sdl.SDL_Rect dest = new Sdl.SDL_Rect(x, y, ancho, alto);
 
         Sdl.SDL_BlitSurface(textoComoImagen, ref origen,
-          pantallaOculta, ref dest);
+            pantallaOculta, ref dest);
     }
 
     public static IntPtr CargarFuente(string fichero, short tamanyo)
@@ -145,7 +145,7 @@ public class Hardware
         Sdl.SDL_Event suceso;
         Sdl.SDL_PollEvent(out suceso);
         /*if (suceso.type == Sdl.SDL_KEYDOWN)
-          if (suceso.key.keysym.sym == c)
+            if (suceso.key.keysym.sym == c)
             pulsada = true;*/
         int numkeys;
         byte[] teclas = Tao.Sdl.Sdl.SDL_GetKeyState(out numkeys);
@@ -165,17 +165,17 @@ public class Hardware
     }
 
     public static void RectanguloRGBA(short x1, short y1, short x2, short y2,
-      byte r, byte g, byte b, byte a)
+        byte r, byte g, byte b, byte a)
     {
         SdlGfx.rectangleRGBA(pantallaOculta,
-          x1, y1, x2, y2, r, g, b, a);
+            x1, y1, x2, y2, r, g, b, a);
     }
 
     public static void RectanguloRellenoRGBA(short x1, short y1, short x2, short y2,
-      byte r, byte g, byte b, byte a)
+        byte r, byte g, byte b, byte a)
     {
         SdlGfx.boxRGBA(pantallaOculta,
-          x1, y1, x2, y2, r, g, b, a);
+            x1, y1, x2, y2, r, g, b, a);
     }
 
     public static void LineaRGBA()
@@ -204,8 +204,8 @@ public class Hardware
 
 
     /** ratonPulsado: devuelve TRUE si
-      *  ha sido pulsado un botón del ratón
-      */
+        *  ha sido pulsado un botón del ratón
+        */
     public static bool RatonPulsado(out int posX, out int posY)
     {
         posX = 0; posY = 0;
@@ -231,9 +231,9 @@ public class Hardware
 
 
     /** JoyPulsado: devuelve TRUE si
-     *  ha sido pulsado un botón del jostick
-     *  (cualquiera, por ahora)
-     */
+        *  ha sido pulsado un botón del jostick
+        *  (cualquiera, por ahora)
+        */
     public static bool JoystickPulsado(int boton)
     {
         if (!existeJoystick)
@@ -246,8 +246,8 @@ public class Hardware
     }
 
     /** ratonPulsado: devuelve TRUE si
-     *  ha sido pulsado un botón del ratón
-     */
+        *  ha sido pulsado un botón del ratón
+        */
     public static bool JoystickMovido(out int posX, out int posY)
     {
         posX = 0; posY = 0;
@@ -326,4 +326,4 @@ public class Hardware
     public static int TECLA_IZQ = Sdl.SDLK_LEFT;
 
 
-} /* end class Hardware */
+}
