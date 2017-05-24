@@ -44,7 +44,7 @@
     }
 
 
-    // --- Cuerpo del programa -----
+    //Cuerpo del programa
     public static void Main()
     {
         Juego juego = new Juego();

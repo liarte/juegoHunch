@@ -38,6 +38,11 @@ public class Partida
         if (Hardware.TeclaPulsada(Hardware.TECLA_IZQ))
             miPersonaje.MoverIzquierda();
 
+        if ((Hardware.TeclaPulsada(Hardware.TECLA_T)) &&
+            (Hardware.TeclaPulsada(Hardware.TECLA_N)))
+            miPantallaJuego.Avanzar();
+
+
         /*if (Hardware.TeclaPulsada(Hardware.TECLA_ARR))
             miPersonaje.MoverArriba();
 
@@ -86,7 +91,7 @@ public class Partida
             // Si ademas es una campana, avanzamos de nivel
             if (puntosMovimiento == 50)
                 //avanzarNivel()
-                ;
+                 miPantallaJuego.Avanzar();
         }
         if (miPersonaje.ColisionCon(miEnemigo))
         {
@@ -114,6 +119,7 @@ public class Partida
         //Marcador
         Mimarcador.SetVidas(miPersonaje.GetVidas());
         Mimarcador.SetPuntuacion(puntos);
+        Mimarcador.SetNombre(miPantallaJuego.GetNombre());
         Mimarcador.DibujarOculta();
 
         // Muestro vidas (pronto será parte del marcador)
@@ -135,11 +141,13 @@ public class Partida
     }
 
 
-    // --- Bucle principal de juego -----
+    // --- Bucle principal de juego
     public void BuclePrincipal()
     {
 
         partidaTerminada = false;
+        puntos = 0;
+        miPantallaJuego.Reiniciar();
         miPersonaje.Reiniciar();
         miPersonaje.SetVidas(3);
         miEnemigo.Reiniciar();

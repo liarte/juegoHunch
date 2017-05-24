@@ -9,6 +9,7 @@ public class Marcador
     private ElemGrafico imgVidas;
     private int vidas;
     private int puntuacion;
+    private string nombreNivel;
 
     private Partida miPartida;
     Fuente tipoDeLetra;
@@ -38,6 +39,11 @@ public class Marcador
     public void SetPuntuacion(int valor)
     {
         puntuacion = valor;
+    }
+
+    public void SetNombre(string valor)
+    {
+        nombreNivel = valor;
     }
 
     public void DibujarOculta()

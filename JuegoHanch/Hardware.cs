@@ -112,11 +112,12 @@ public class Hardware
     }
 
     public static void EscribirTextoOculta(string texto,
-        short x, short y, byte r, byte g, byte b, IntPtr fuente)
+      short x, short y, byte r, byte g, byte b, IntPtr fuente)
     {
+        if ((texto == "") || (texto == null)) return;
         Sdl.SDL_Color color = new Sdl.SDL_Color(r, g, b);
         IntPtr textoComoImagen = SdlTtf.TTF_RenderText_Solid(
-            fuente, texto, color);
+          fuente, texto, color);
         if (textoComoImagen == IntPtr.Zero)
             Environment.Exit(5);
 
@@ -124,7 +125,7 @@ public class Hardware
         Sdl.SDL_Rect dest = new Sdl.SDL_Rect(x, y, ancho, alto);
 
         Sdl.SDL_BlitSurface(textoComoImagen, ref origen,
-            pantallaOculta, ref dest);
+          pantallaOculta, ref dest);
     }
 
     public static IntPtr CargarFuente(string fichero, short tamanyo)
